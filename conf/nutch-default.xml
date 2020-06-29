@@ -83,7 +83,7 @@
 
 <property>
   <name>http.agent.name</name>
-  <value></value>
+  <value>DHSpider</value>
   <description>HTTP 'User-Agent' request header. MUST NOT be empty - 
   please set this to a single word uniquely related to your organization.
 
@@ -214,7 +214,7 @@
 
 <property>
   <name>http.content.limit</name>
-  <value>1048576</value>
+  <value>1348576</value>
   <description>The length limit for downloaded content using the http/https
   protocols, in bytes. If this value is non-negative (>=0), content longer
   than it will be truncated; otherwise, no truncation at all. Do not
