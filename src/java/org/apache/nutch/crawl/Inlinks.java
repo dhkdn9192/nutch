@@ -85,6 +85,34 @@ public class Inlinks implements Writable {
    * Return the set of anchor texts. Only a single anchor with a given text is
    * permitted from a given domain.
    */
+//  public String[] getAnchors() {
+//    HashMap<String, Set<String>> domainToAnchors = new HashMap<>();
+//    ArrayList<String> results = new ArrayList<>();
+//    Iterator<Inlink> it = inlinks.iterator();
+//    while (it.hasNext()) {
+//      Inlink inlink = it.next();
+//      String anchor = inlink.getAnchor();
+//
+//      if (anchor.length() == 0) // skip empty anchors
+//        continue;
+//      String domain = null; // extract domain name
+//      try {
+//        domain = new URL(inlink.getFromUrl()).getHost();
+//      } catch (MalformedURLException e) {
+//      }
+//      Set<String> domainAnchors = domainToAnchors.get(domain);
+//      if (domainAnchors == null) {
+//        domainAnchors = new HashSet<>();
+//        domainToAnchors.put(domain, domainAnchors);
+//      }
+//      if (domainAnchors.add(anchor)) { // new anchor from domain
+//        results.add(anchor); // collect it
+//      }
+//    }
+//
+//    return results.toArray(new String[results.size()]);
+//  }
+  
   public String[] getAnchors() {
     HashMap<String, Set<String>> domainToAnchors = new HashMap<>();
     ArrayList<String> results = new ArrayList<>();
@@ -92,12 +120,13 @@ public class Inlinks implements Writable {
     while (it.hasNext()) {
       Inlink inlink = it.next();
       String anchor = inlink.getAnchor();
+      String fromUrl = inlink.getFromUrl();
 
       if (anchor.length() == 0) // skip empty anchors
         continue;
       String domain = null; // extract domain name
       try {
-        domain = new URL(inlink.getFromUrl()).getHost();
+        domain = new URL(fromUrl).getHost();
       } catch (MalformedURLException e) {
       }
       Set<String> domainAnchors = domainToAnchors.get(domain);
@@ -105,11 +134,10 @@ public class Inlinks implements Writable {
         domainAnchors = new HashSet<>();
         domainToAnchors.put(domain, domainAnchors);
       }
-      if (domainAnchors.add(anchor)) { // new anchor from domain
-        results.add(anchor); // collect it
+      if (domainAnchors.add(fromUrl)) { // new anchor from domain
+        results.add(fromUrl); // collect fromurl, not anchor text
       }
     }
-
     return results.toArray(new String[results.size()]);
   }
 
